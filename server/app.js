@@ -4,18 +4,18 @@ import express from "express";
 import connection from "./config/db.js";
 import UserRoutes from "./routes/userRoutes.js";
 import Authroutes from "./routes/authRoutes.js";
-import { error } from "console";
+import cors from "cors";
 const PORT = process.env.APP_PORT || 3000;
 const app = express();
-
-app.use(express.json());
-
 // Database connection
 connection();
 
+app.use(express.json());
+app.use(cors());
+
 app.use((err, req, res, next) => {
-  const statusCode = err.statusCode;
-  const message = err.message;
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal server error";
   return res.status(statusCode).json({
     success: false,
     message,
