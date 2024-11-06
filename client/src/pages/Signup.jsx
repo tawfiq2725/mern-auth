@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
   const [data, setData] = useState({});
   const [Loding, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
   const handleForm = (event) => {
     setData({ ...data, [event.target.id]: event.target.value });
   };
@@ -18,6 +19,7 @@ const Signup = () => {
       console.log("user created successfully");
       setLoading(false);
       setError(false);
+      navigate("/signin");
     } catch (error) {
       setLoading(false);
       setError(true);
